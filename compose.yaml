@@ -1,34 +1,20 @@
 services:
-  server:
+  ghost-app:
     build:
       context: .
+      dockerfile: Dockerfile
+    image: ghost-app:latest
     ports:
-      - 8080:8080
+      - "8080:8080"
     environment:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://dpg-ct3k4l8gph6c73c04cdg-a.oregon-postgres.render.com/bdgs
       - SPRING_DATASOURCE_USERNAME=bdgs_user
       - SPRING_DATASOURCE_PASSWORD=LK0lcTxXIsvMoy1f7a27z7HbXNd7XJXh
       - SPRING_JPA_HIBERNATE_NAMING_PHYSICAL_STRATEGY=org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
       - SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT=org.hibernate.dialect.PostgreSQLDialect
-    depends_on:
-      - db
+    networks:
+      - ghost-network
 
-  db:
-    image: postgres
-    restart: always
-    environment:
-      - POSTGRES_DB=bdgs
-      - POSTGRES_USER=bdgs_user
-      - POSTGRES_PASSWORD=LK0lcTxXIsvMoy1f7a27z7HbXNd7XJXh
-    volumes:
-      - db-data:/var/lib/postgresql/data
-    expose:
-      - 5432
-    healthcheck:
-      test: ["CMD", "pg_isready"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-
-volumes:
-  db-data:
+networks:
+  ghost-network:
+    driver: bridge
