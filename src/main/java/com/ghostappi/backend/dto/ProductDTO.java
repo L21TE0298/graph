@@ -2,9 +2,7 @@ package com.ghostappi.backend.dto;
 
 import java.math.BigDecimal;
 import java.sql.Date;
-import java.util.List;
 
-import jakarta.validation.constraints.*;
 import lombok.Getter;
 import lombok.Setter;
 
