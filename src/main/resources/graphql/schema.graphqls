@@ -23,4 +23,3 @@ type Product {
   productRecomendation: String!
   imgProductPath: String!
 }
-
